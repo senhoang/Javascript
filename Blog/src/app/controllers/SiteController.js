@@ -2,18 +2,14 @@ const Course = require('../modles/Course')
 
 class SiteController {
   // [GET]/
-  index(req, res) {
-
-    Course.find({}, function (err, courses) {
-      if(!err) {
-        // console.log('sent')
-        res.json(courses);
-      } else {
-        res.status(400).json({ error: 'ERROR!!!'});
-      }
-    });
-
-    // res.render('home');
+  index(req, res, next) {
+    Course.find({}).lean()
+      .then(courses => {
+        // courses = courses.map(course => {course: course})
+        // console.log(courses)
+        res.render('home', { courses })
+      })
+      .catch( (err) =>console.log(err));
   }
 
   // [GET]/ search
