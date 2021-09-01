@@ -1,0 +1,53 @@
+<div class="mt-4">
+  <form method="POST" action="/courses/{{course._id}}?_method=PUT">
+    <div class="mb-3">
+      <label for="name" class="form-label">Tên khóa học</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        id="name"
+        aria-describedby="Name"
+        value="{{course.name}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Mô tả</label>
+      <input
+        type="text"
+        class="form-control"
+        name="description"
+        id="description"
+        aria-describedby="description"
+        value="{{course.description}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="img" class="form-label">Link thumbnail</label>
+      <input
+        type="text"
+        class="form-control"
+        name="img"
+        id="img"
+        aria-describedby="img"
+        value="{{course.img}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="youtubeid" class="form-label">Id youtube</label>
+      <input
+        type="text"
+        class="form-control"
+        name="youtubeid"
+        id="youtubeid"
+        aria-describedby="youtubeid"
+        value="{{course.youtubeid}}"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>
+
+
+
+

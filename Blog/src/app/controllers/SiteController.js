@@ -5,8 +5,6 @@ class SiteController {
   index(req, res, next) {
     Course.find({}).lean()
       .then(courses => {
-        // courses = courses.map(course => {course: course})
-        // console.log(courses)
         res.render('home', { courses })
       })
       .catch( (err) =>console.log(err));

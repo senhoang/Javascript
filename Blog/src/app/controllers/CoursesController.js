@@ -10,7 +10,6 @@ class CoursesController {
     res.render("courses/create");
   }
 
-
   store(req, res) {
     const formData = req.body
     const course = new Course(formData)
@@ -19,6 +18,24 @@ class CoursesController {
       .catch(error => console.log(error))
 
   }
+
+  edit(req, res, next) {
+    Course.findById(req.params.id).lean()
+    .then((course) => {
+      // res.send(course)
+      res.render('courses/edit', {course})
+      })
+      .catch(next);
+  }
+
+  update(req, res, next) {
+    Course.updateOne({ _id: req.params.id}, req.body)
+    .then(() => {
+      res.redirect('/me/stored/course')
+      })
+      .catch(next);
+  }
+
 
   // [GET]/ news/:slug
   show(req, res, next) {
