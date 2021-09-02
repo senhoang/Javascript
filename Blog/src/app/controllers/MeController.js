@@ -2,7 +2,7 @@ const Course = require("../modles/Course");
 
 class CoursesController {
   storedCourses(req, res) {
-    Course.find({})
+    Course.find({deletedAt: null})
       .lean()
       .then((courses) => {
         res.render("me/stored-courses", { courses });
