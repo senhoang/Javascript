@@ -6,6 +6,19 @@ const methodOverride = require('method-override')
 const app = express();
 const port = 3000;
 
+
+// app.use(bacbaove)
+
+function bacbaove(req, res, next) {
+  if  (['vethuong','vevip'].includes(req.query.ve)) {
+    req.face = 'gach gach gach';
+    return next();
+  }
+  res.status(403).json({
+    message: "Access denided"
+  });
+}
+
 const route = require('./routes');
 const db = require('./config/db')
 

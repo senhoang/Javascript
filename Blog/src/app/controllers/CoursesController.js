@@ -14,7 +14,7 @@ class CoursesController {
     const formData = req.body
     const course = new Course(formData)
     course.save()
-      .then(() => res.redirect('/'))
+      .then(() => res.redirect('/me/stored/courses'))
       .catch(error => console.log(error))
 
   }
@@ -48,9 +48,48 @@ class CoursesController {
 
   // [DELETE] /courses/:id
   destroy(req, res, next) {
+    Course.delete({ _id: req.params.id })
+      .then(() => res.redirect('back'))
+      .catch(next);
+  }
+
+
+  // [DELETE] /courses/:id/force
+  forceDestroy(req, res, next) {
     Course.deleteOne({ _id: req.params.id })
       .then(() => res.redirect('back'))
       .catch(next);
+  }
+
+  // [PATCH] /courses/:id/restore
+  restore(req, res, next) {
+    Course.restore({ _id: req.params.id })
+      .then(() => res.redirect('back'))
+      .catch(next);
+  }
+
+  // [POST] /courses/handle form actions
+  handleFormActions(req, res, next) {
+    // res.send(req.body.courseIds)
+    switch (req.body.action) {
+      case 'delete':
+        Course.delete({ _id: req.body.courseIds })
+          .then(() => res.redirect('back'))
+          .catch(next);
+        break;
+      case 'restore':
+        Course.restore({ _id: req.body.courseIds })
+          .then(() => res.redirect('back'))
+          .catch(next);
+        break;
+      case 'deleteMany':
+        Course.deleteMany({ _id: req.body.courseIds })
+          .then(() => res.redirect('back'))
+          .catch(next);
+        break;
+      default:
+        res.json({message: 'Action is invalid'});
+    }
   }
 }
 

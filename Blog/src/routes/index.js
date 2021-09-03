@@ -16,6 +16,6 @@ module.exports = route;
 // POST : GUI DU LIEU VA YEU CAU LUU LAI
 // PUT : SUA TAT CA
 // PATH : SUA 1 
-// DELETE
+// DELETE : XOA
 // OPTIONS: 
 // HEAD
