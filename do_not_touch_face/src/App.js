@@ -33,8 +33,9 @@ function App() {
           {video: true},
           stream => {
             video.current.srcObject = stream
+            video.current.addEventListener('loadeddata', resolve);
           },
-          error => console.log('cuoi ia')
+          error => console.log('unable connect to your camera !!')
         )
       } else {
         reject()
