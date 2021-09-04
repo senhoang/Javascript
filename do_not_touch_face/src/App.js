@@ -7,7 +7,7 @@ const knnClassifier = require('@tensorflow-models/knn-classifier');
 const mobilenet = require('@tensorflow-models/mobilenet');
 
 var sound = new Howl({
-  src: ['soundURL']
+  src: [soundURL]
 });
 
 sound.play();
