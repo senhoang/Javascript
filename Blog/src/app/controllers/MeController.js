@@ -1,10 +1,19 @@
 const Course = require("../modles/Course");
 
-class CoursesController {
-  storedCourses(req, res) {
+class MeController {
+
+  
+  storedCourses(req, res, next) {
+    let courseQuery = Course.find({})
+
+    if (req.query.hasOwnProperty('_sort')) {
+      courseQuery = courseQuery.sort({
+        [req.query.column]: req.query.type
+      })
+    }
 
     Promise.all([
-      Course.find({}).lean(),
+      courseQuery.lean(),
       Course.countDocumentsDeleted()
     ])
       .then(([courses,deletedCount]) =>
@@ -59,4 +68,4 @@ class CoursesController {
   // }
 }
 
-module.exports = new CoursesController();
+module.exports = new MeController();

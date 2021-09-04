@@ -11,9 +11,9 @@ class CoursesController {
   }
 
   store(req, res) {
-    const formData = req.body
-    const course = new Course(formData)
-    course.save()
+    const course = new Course(req.body)
+    course
+      .save()
       .then(() => res.redirect('/me/stored/courses'))
       .catch(error => console.log(error))
 

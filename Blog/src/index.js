@@ -7,17 +7,7 @@ const app = express();
 const port = 3000;
 
 
-// app.use(bacbaove)
-
-function bacbaove(req, res, next) {
-  if  (['vethuong','vevip'].includes(req.query.ve)) {
-    req.face = 'gach gach gach';
-    return next();
-  }
-  res.status(403).json({
-    message: "Access denided"
-  });
-}
+const SortMiddleware = require('./app/middlewares/SortMiddleware')
 
 const route = require('./routes');
 const db = require('./config/db')
@@ -28,6 +18,9 @@ db.connect()
 app.use(methodOverride('_method'))
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Custom middleware
+app.use(SortMiddleware)
 
 app.use(
   express.urlencoded({
@@ -46,7 +39,28 @@ app.engine(
     extname: '.hbs',
     helpers: {
       sum: (a, b) => a + b,
-  }
+      sortable: (filed, sort) => {
+        const sortType = filed === sort.column ? sort.type : 'default'
+
+        const icons = {
+          default: 'oi oi-elevator',
+          asc: 'oi oi-sort-ascending',
+          desc: 'oi oi-sort-descending',
+        }
+        const  types = {
+          default: 'desc',
+          asc: 'desc',
+          desc: 'asc',
+        }
+
+        const icon = icons[sortType]
+        const type = types[sortType]
+        
+        return `<a href="?_sort&column=${filed}&type=${type}">
+                  <span class="${icon}"></span>
+                </a>`
+      }
+    },
   }),
 );
 app.set('view engine', 'hbs');
