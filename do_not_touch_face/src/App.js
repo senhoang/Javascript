@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
 // import {Howl} from 'howler';
 // import soundURL from './assets/hey_sondn.mp3'
@@ -14,11 +14,11 @@ import './App.css';
 // sound.play();
 
 function App() {
-  const video = useRef()
+  const video = useRef();
 
   const init = async () => {
     console.log('init...')
-    await setupCamera()
+    await setupCamera();
   }
 
   const setupCamera = () => {
@@ -34,16 +34,17 @@ function App() {
           stream => {
             video.current.srcObject = stream
           },
-          reject()  
+          error => console.log('cuoi ia')
         )
       } else {
         reject()
       }
     })
+    // .catch()
   }
 
   useEffect(() => {
-    init();
+    init()
 
     //cleanup
     return () => {
