@@ -60,7 +60,7 @@ function App() {
 
   const train = async label => {
     for (let i = 0; i < TRAINING_TIMES; i++) {
-      console.log(parseInt(i+1 / TRAINING_TIMES * 100))
+      console.log(`parseInt ${i+1 / TRAINING_TIMES * 100}`)
 
       await sleep(100)
     }
@@ -89,8 +89,8 @@ function App() {
       </video>
 
     <div className="control">
-      <button className="btn" onClick={(NOT_TOUCH_LABEL) => {}}>Train 1</button>
-      <button className="btn" onClick={(TOUCHED_LABEL) => {}}>Train 2</button>
+      <button className="btn" onClick={() => train(NOT_TOUCH_LABEL)}>Train 1</button>
+      <button className="btn" onClick={() => train(TOUCHED_LABEL)}>Train 2</button>
       <button className="btn" onClick={() => {}}>Run</button>
     </div>
     </div>
