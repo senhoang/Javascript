@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css';
-// import {Howl} from 'howler';
-// import soundURL from './assets/hey_sondn.mp3'
+import {Howl} from 'howler';
+import soundURL from './assets/hey_sondn.mp3'
 
-// const tf = require('@tensorflow/tfjs');
-// const knnClassifier = require('@tensorflow-models/knn-classifier');
-// const mobilenet = require('@tensorflow-models/mobilenet');
+const tf = require('@tensorflow/tfjs');
+const knnClassifier = require('@tensorflow-models/knn-classifier');
+const mobilenet = require('@tensorflow-models/mobilenet');
 
 // var sound = new Howl({
 //   src: [soundURL]
@@ -13,12 +13,26 @@ import './App.css';
 
 // sound.play();
 
+const NOT_TOUCH_LABEL = 'not_touch'
+const TOUCHED_LABEL = 'touched'
+const TRAINING_TIMES = 50
+
 function App() {
   const video = useRef();
+  const mobilenetModule = useRef();
+  const classifier = useRef();
 
   const init = async () => {
     console.log('init...')
-    await setupCamera();
+    await setupCamera()
+    console.log('setup camera success')
+    
+    mobilenetModule.current = await mobilenet.load()
+    
+    classifier.current = knnClassifier.create()
+    
+    console.log('done')
+    console.log('Khong cham tay len mat va bam Train1')
   }
 
   const setupCamera = () => {
@@ -44,6 +58,18 @@ function App() {
     // .catch()
   }
 
+  const train = async label => {
+    for (let i = 0; i < TRAINING_TIMES; i++) {
+      console.log(parseInt(i+1 / TRAINING_TIMES * 100))
+
+      await sleep(100)
+    }
+  }
+
+  const sleep = (ms = 0) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
   useEffect(() => {
     init()
 
@@ -63,9 +89,9 @@ function App() {
       </video>
 
     <div className="control">
-      <button className="btn">Train 1</button>
-      <button className="btn">Train 2</button>
-      <button className="btn">Run</button>
+      <button className="btn" onClick={(NOT_TOUCH_LABEL) => {}}>Train 1</button>
+      <button className="btn" onClick={(TOUCHED_LABEL) => {}}>Train 2</button>
+      <button className="btn" onClick={() => {}}>Run</button>
     </div>
     </div>
   );
